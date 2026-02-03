@@ -5,12 +5,12 @@ https://hehestudio.netlify.app/
 
 A modern, responsive portfolio website built for a freelance client to showcase creative projects and studio services.
 
-<img width="228" height="217" alt="Screenshot 2026-02-04 at 12 39 31 AM" src="https://github.com/user-attachments/assets/f4d4a9c1-569d-47c4-b442-3b62c2d6f83d" />
+<img width="214" height="224" alt="Screenshot 2026-02-04 at 12 56 57 AM" src="https://github.com/user-attachments/assets/388ef9ef-fa2b-4c25-99e7-e28cb5aafcef" />
 
 ---
 
 ###  Hehe studio 
-<img width="1916" height="922" alt="Screenshot 2026-02-02 at 9 01 54 PM" src="https://github.com/user-attachments/assets/8e3293d9-53d3-4048-9bae-3e91d79afe44" />
+<img width="1896" height="917" alt="Screenshot 2026-02-04 at 12 57 24 AM" src="https://github.com/user-attachments/assets/ca205142-a119-4cd4-aec2-e475ef11f2a0" />
 
 ---
 
