@@ -41,10 +41,10 @@ const Sidebar = () => {
             >
               {isContactOpen && (
                 <>
-                  <p className="mt-10 opacity-80">sunnywxyzstudio@gmail.com</p>
+                  <p className="mt-10 opacity-80">sunny.whe.design@gmail.com</p>
                   <p className="opacity-80">+44 7388348419</p>
                   <br />
-                  <p className="mt-10 opacity-80">© WXYZ Studio</p>
+                  <p className="mt-10 opacity-80">© Hehe Studio</p>
                   <br />
                   <p className="mt-10 opacity-80">Southampton</p>
                   <p className="opacity-80">Hampshire, United Kingdom</p>

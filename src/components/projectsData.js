@@ -17,7 +17,7 @@ const projectsData = [
             name: "Weisheng He",
             date: '2025',
             mainImage: "/GOSPORT FERRY STATION/pj-5.jpg",
-            images: Array.from({length: 5}, (_, i) =>
+            images: Array.from({length: 7}, (_, i) =>
                 `/GOSPORT FERRY STATION/pj-05-${i + 1}.jpg`
             )
 
@@ -50,7 +50,7 @@ const projectsData = [
             date: '2022',
             mainImage: "/GOSPORT HERITAGE FLAT/pj-3.jpg",
             images: Array.from({length: 3}, (_, i) =>
-                `/CUMBERLAND BASIN/pj-03-${i + 1}.jpg`
+                `/GOSPORT HERITAGE FLAT/pj-03-${i + 1}.jpg`
             ) 
 
     },
