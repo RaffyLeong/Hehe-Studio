@@ -31,7 +31,7 @@ const Sidebar = () => {
               onClick={handleContactClick}
               className="block py-2 px-4 hover:opacity-100  rounded opacity-70 focus:bg-gray-300 focus:opacity-100 text-left w-full"
             >
-              Contact Us
+              Contact
             </button>
             <div
               className="ml-4 mt-10 text-[16px] overflow-hidden transition-max-height duration-300 ease-in-out"

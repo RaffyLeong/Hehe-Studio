@@ -40,7 +40,7 @@ const Contact = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-5 border border-gray-300 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-5">Contact Us</h2>
+      <h2 className="text-2xl font-bold mb-5">Contact</h2>
       {successMessage && (
         <p className="text-green-500 mb-4">{successMessage}</p>
       )}
