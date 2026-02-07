@@ -54,7 +54,7 @@ const ProjectShowcase = ({ project, onClose }) => {
         &times; {/* Close button */}
       </button>
 
-      <div className="bg-white p-8 rounded-md shadow-lg w-[80vw] h-[100vh] relative overflow-y-auto max-h-[90vh] border-t">
+      <div className="bg-white p-8 rounded-md shadow-lg w-[80vw] relative max-h-[90vh] border-t">
         {/* showing pages length */}
         {mediaItems.length > 1 && (
           <div className="absolute top-9 right-16 text-black px-3 py-1  text-sm font-bold">
@@ -70,14 +70,14 @@ const ProjectShowcase = ({ project, onClose }) => {
         <div className="mb-6 cursor-pointer relative" onClick={imageClick}>
           {/* Right arrow */}
           <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1/4 h-full flex items-center justify-end pr-4 pointer-events-none">
-            <div className="text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center">
+            <div className="text-white text-4xl p-1 font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center pb-2">
               &gt;
             </div>
           </div>
 
           {/* left arrow */}
           <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1/4 h-full flex items-center justify-start pl-4 pointer-events-none">
-            <div className="text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center">
+            <div className="text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center pb-1">
               &lt;
             </div>
           </div>
@@ -85,7 +85,7 @@ const ProjectShowcase = ({ project, onClose }) => {
           {/* video */}
           {mediaItems.length > 0 &&
           mediaItems[currentIndex].type === "video" ? (
-            <video controls className="w-full h-auto max-w-full rounded-md">
+            <video controls className="w-full h-auto max-h-[calc(90vh-200px)] object-contain rounded-md">
               <source src={mediaItems[currentIndex].src} type="video/mp4" />
               Your broswer does not support the video tag.
             </video>
@@ -93,7 +93,7 @@ const ProjectShowcase = ({ project, onClose }) => {
             <img
               src={mediaItems[currentIndex]?.src}
               alt={`${project.title} - Image ${currentIndex + 1}`}
-              className="w-full h-auto max-w-full rounded-md"
+              className="w-full h-auto max-h-[calc(90vh-200px)] object-contain rounded-md"
             />
           )}
         </div>
