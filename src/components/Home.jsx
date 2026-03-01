@@ -20,11 +20,17 @@ const ProjectThumbnail = ({ project, onClick }) => {
 // Projects Show Case
 const ProjectShowcase = ({ project, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false)
+  
 
   const mediaItems = [
     ...(project.video ? [{ type: "video", src: project.video }] : []),
     ...project.images.map((img) => ({ type: "image", src: img })),
   ];
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
 
   const imageClick = (e) => {
     const imageWidth = e.currentTarget.offsetWidth;
@@ -36,12 +42,14 @@ const ProjectShowcase = ({ project, onClose }) => {
       setCurrentIndex(
         currentIndex > 0 ? currentIndex - 1 : mediaItems.length - 1,
       );
+      setIsLoading(true);
     }
     // Click on right of image
     else if (clickX > zoneWidth * 3) {
       setCurrentIndex(
         currentIndex < mediaItems.length - 1 ? currentIndex + 1 : 0,
       );
+      setIsLoading(true);
     }
   };
 
@@ -81,6 +89,16 @@ const ProjectShowcase = ({ project, onClose }) => {
               &lt;
             </div>
           </div>
+          
+          {/* Loading Spinner - THIS IS WHAT WAS MISSING */}
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-20">
+              <div className="flex flex-col items-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+                <p className="mt-2 text-sm text-gray-600">Loading...</p>
+              </div>
+            </div>
+          )}
 
           {/* video */}
           {mediaItems.length > 0 &&
@@ -91,7 +109,7 @@ const ProjectShowcase = ({ project, onClose }) => {
             </video>
           ) : (
             <img
-              src={mediaItems[currentIndex]?.src}
+              src={mediaItems[currentIndex]?.src} onLoad={handleImageLoad}
               alt={`${project.title} - Image ${currentIndex + 1}`}
               className="w-full h-auto max-h-[calc(90vh-200px)] object-contain rounded-md"
             />
