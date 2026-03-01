@@ -89,8 +89,8 @@ const ProjectShowcase = ({ project, onClose }) => {
               &lt;
             </div>
           </div>
-          
-          {/* Loading Spinner - THIS IS WHAT WAS MISSING */}
+
+          {/* Loading Spinner */}
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-20">
               <div className="flex flex-col items-center">
