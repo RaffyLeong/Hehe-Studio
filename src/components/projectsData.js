@@ -6,7 +6,7 @@ const projectsData = [
             date: '2026',
             mainImage: "/MONG KOK PEDESTRIAN/pj-06-1.jpg",
             video: "/MONG KOK PEDESTRIAN/pj-6-compressed.mp4",
-            images: Array.from({length: 36}, (_, i) => 
+            images: Array.from({length: 12}, (_, i) => 
                 `/MONG KOK PEDESTRIAN/pj-06-${i + 1}.jpg`
             )
 
