@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import projectsData from "./projectsData";
+import ShapeDiverViewer from "./ShapeDiverViewer";
 
 // project image on home page
 const ProjectThumbnail = ({ project, onClick }) => {
@@ -16,6 +17,7 @@ const ProjectThumbnail = ({ project, onClick }) => {
     </div>
   );
 };
+
 
 // Projects Show Case
 const ProjectShowcase = ({ project, onClose }) => {
@@ -137,22 +139,45 @@ const Home = () => {
 
   return (
     <div className="container mt-24 mx-auto p-8 justify-center">
-      {/*  Remove the grid classes and use a flex container for vertical layout. */}
       <div className="flex flex-col mb-20 gap-10 justify-center items-center">
         {projectsData.map((project) => (
-          <ProjectThumbnail
-            key={project.id}
-            project={project}
-            onClick={handleThumbnailClick}
-          />
+          <div key={project.id} className="w-full max-w-[900px]">
+            {project.type === 'shapediver' ? (
+              <div>
+                <div className="h-[600px] w-full bg-gray-100 rounded-md overflow-hidden border-[2px] pb-20 p-6 border-gray-300 border-dashed">
+                  <h2 className="text-2xl font-semibold mb-2">{project.title}</h2>
+                <h3 className="mb-4 opacity-60">
+                  By {project.name} · {project.date}
+                  <span className="ml-4 px-3 py-1 bg-gray-200 rounded-full text-sm">
+                    Interactive 3D Model
+                  </span>
+                </h3>
+                  <ShapeDiverViewer
+                    modelUrl={project.shapediverConfig.modelUrl}
+                    ticket={project.shapediverConfig.ticket}
+                    onLoad={() => console.log('Model loaded')}
+                    onError={() => alert('Error loading 3D model')}
+                  />
+                </div>
+              </div>
+            ) : (
+              // Render thumbnail for regular projects
+              <ProjectThumbnail
+                project={project}
+                onClick={handleThumbnailClick}
+              />
+            )}
+          </div>
         ))}
       </div>
 
       {selectedProject && (
-        <ProjectShowcase
+        selectedProject.type !== 'shapediver' && (
+          <ProjectShowcase
           project={selectedProject}
           onClose={handleCloseShowcase}
-        />
+          />
+        )
       )}
     </div>
   );
