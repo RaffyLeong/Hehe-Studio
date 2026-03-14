@@ -6,8 +6,8 @@ const projectsData = [
         date: '2026',
         type: 'shapediver',
         shapediverConfig: {
-            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260411-adding-material-attribute-4",
-            ticket: "61e0a1c1abfe5105b0233705b399901fb441558764d1618ea614e0153d8ff616d97c1dc93d155350b96c7ba5bd9366c0a16f34ae971e5578409a8e4d15ca0df09f088760db979031e3ea593fe9eb72a8aad04013c6e0f6168bfc4b16e4c0123d8c623024dac12f-7088b623e5280fb610643af25b842adb",
+            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260411-custom-shelf-7",
+            ticket: "55e6e7a4aec6c783e238f5d4b4a55ad9bf567528114b56b3c22685509401c0e391c64317beb6238e1f9ef7f6edbdcb26bf0ebdfda2415e89c8fe27ccdc8887a6858c7827e97abad7731e890e4abff0fb08b0458e50498a46b96e23adc8dfc961f75803e97dbc54-5f98e31c1cad5418db7cc0c56acf4286",
             modelName: "260323 HEHE Custom Shelf",
             requiresAuth: true
         },
