@@ -3,61 +3,96 @@ const About = () => {
     <div className="container mx-auto py-12 px-4 md:px-8 lg:px-80 font-sans">
       {/* Section 1: Introduction */}
       <section className="mb-12">
-        <h2 className="text-[20px] font-semibold  mb-4">About HeHe Studio</h2>
+        <h2 className="text-[24px] font-semibold  mb-4">About Me</h2>
         <p className="text-[16px] opacity-60 leading-relaxed">
-          At HeHe Studio, we reimagine spaces through the lens of generative design and computational innovation.
-          Rooted in the belief that architecture should evolve with its context, we craft dynamic,
-          data-driven solutions for buildings, interiors, and urban environments—always harmonizing creativity with precision.
+          I'm a computational designer and BIM professional dedicated to
+          bridging the gap between architectural intent and highly coordinated
+          construction data. Currently working as a Design & BIM Coordinator at
+          Darwin Group, I specialise in integrating advanced parametric
+          workflows with real-world building execution.
         </p>
-        <br/>
       </section>
 
-      {/* Section 2: Beyond Traditional Design */}
+      {/* Section 2: My Computational Design Approach */}
       <section className="mb-12">
-        <h2 className="text-[20px] font-semibold  mb-4">Beyond Traditional Design</h2>
+        <h2 className="text-[20px] font-semibold mb-4">
+          My Computational Design Approach
+        </h2>
         <p className="text-[16px] opacity-60 leading-relaxed">
-          We harness algorithms, parametric modeling, and BIM workflows to explore thousands of design possibilities,
-          ensuring every project is optimized for sustainability, functionality, and aesthetic impact.
-          From adaptive furniture systems to large-scale developments, our process merges cutting-edge technology with human-centered storytelling.
+          My passion lies in leveraging computational tools to solve complex
+          geometric and data challenges in architecture.
         </p>
-        <br/>
+        <br />
+        <ul className="space-y-4 list-disc pl-5">
+          <li className="text-[16px] leading-relaxed">
+            <span className="font-bold">Rhino.Inside.Revit: </span>
+            <span className="opacity-60">bridging the gap between Rhino's advanced geometric modeling and Revit's BIM environment, 
+              allowing for dynamic data exchange and automated modeling tasks.</span>
+          </li>
+          <li className="text-[16px] leading-relaxed">
+            <span className="font-bold">Grasshopper & Ladybug: </span>
+            <span className="opacity-60">building custom parametric scripts to solve site-specific problems, such as analysing the surface level of concrete floor slabs to assist with slab leveling. 
+              I also assist designers by running environmental and thermal calculations for facades using Ladybug.</span>
+          </li>
+          <li className="text-[16px] leading-relaxed">
+            <span className="font-bold">ShapeDiver: </span>
+            <span className="opacity-60">I leverage ShapeDiver to take my parametric Grasshopper models to the web, enabling interactive, 
+              cloud-based design configuration and democratising complex computational logic for clients and collaborators.</span>
+          </li>
+        </ul>
+        <br />
       </section>
 
-      {/* Section 3: Our Work */}
+      {/* Section 3: Professional Experience & BIM Coordination */}
       <section className="mb-12">
-        <h2 className="text-[20px] font-semibold  mb-4">Our Work</h2>
-        <div className="space-y-4">
-          <p className="text-[16px] opacity-60 leading-relaxed">
-            <span className="font-medium">Architecture & Urban Design:</span> Generative masterplans that respond to cultural, environmental, and social layers of place.
-          </p>
-          <p className="text-[16px] opacity-60 leading-relaxed">
-            <span className="font-medium">BIM Integration:</span> Streamlined collaboration, from concept to construction, with intelligent 3D modeling.
-          </p>
-          <p className="text-[16px] opacity-60 leading-relaxed">
-            <span className="font-medium">Interiors + Furniture:</span> Algorithm-crafted spaces and bespoke furnishings that adapt to evolving needs.
-          </p>
-          <br/>
-        </div>
+        <h2 className="text-[20px] font-semibold mb-4">
+          Professional Experience & BIM Coordination
+        </h2>
+        <p className="text-[16px] opacity-60 leading-relaxed">
+          My computational skills are grounded in rigorous onsite and digital coordination experience. 
+          In my current role managing the Revit digital twin for a £90m healthcare facility at the Royal Bournemouth Hospital, 
+          I ensure seamless integration between the theoretical model and the as-built reality.
+        </p>
+        <br />
+        <p className="text-[16px] opacity-60 leading-relaxed">
+          Previously, as a Graduate Design Coordinator at Reds10, 
+          I oversaw complex modular projects across the Education, Defence, and Justice sectors. My day-to-day expertise involves:
+        </p>
+        <br />
+        <ul className="space-y-4 pl-5">
+          <li className="text-[16px] leading-relaxed flex gap-2">
+            <span className="text-black font-bold">•</span>
+            <span className="opacity-60">Running advanced clash detection using Navisworks to identify and resolve potential issues early, 
+            maintaining tight project programs.</span>
+            
+          </li>
+          <li className="text-[16px] leading-relaxed flex gap-2">
+            <span className="text-black font-bold">•</span>
+            <span className="opacity-60">Managing COBie deliverables and assisting in the setup of BIM Execution Plans.</span>
+            
+          </li>
+          <li className="text-[16px] leading-relaxed flex gap-2">
+            <span className="text-black font-bold">•</span>
+            <span className="opacity-60">Overseeing manufacturing and onsite activities to ensure strict adherence to design specifications.</span>
+            
+          </li>
+        </ul>
+        <br />
       </section>
 
-      {/* Section 4: Why We're Different */}
+      {/* Section 4: Background */}
       <section className="mb-12">
-        <h2 className="text-[20px] font-semibold  mb-4">Why We`re Different</h2>
+        <h2 className="text-[20px] font-semibold  mb-4">Background</h2>
         <p className="text-[16px] opacity-60 leading-relaxed">
-          We don`t just design for the future—we design with it. By embedding computational logic into every curve, grid,
-          and material choice, we transform static spaces into living ecosystems that grow with their communities.
+          My foundation in design stems from a BSc (Hons) in Architecture from the University of the West of England , 
+          alongside formative experiences at 3bd Architects and The Bartlett Summer School. 
+          Whether it's crafting comprehensive drawing packages or script-building for environmental optimisation, 
+          I am driven by the belief that better data leads to better built environments.
         </p>
-        <br/>
+        <br />
       </section>
 
-      {/* Section 5: Join Us */}
-      <section>
-        <h2 className="text-[20px] font-semibold  mb-4">Join Us</h2>
-        <p className="text-[16px] opacity-60 leading-relaxed">
-          Let`s collaborate to shape environments where innovation meets intuition.
-        </p>
-        <br/>
-      </section>
+      
     </div>
   );
 };

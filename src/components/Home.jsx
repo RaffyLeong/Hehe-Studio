@@ -18,83 +18,120 @@ const ProjectThumbnail = ({ project, onClick }) => {
   );
 };
 
-
 // Projects Show Case
 const ProjectShowcase = ({ project, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   
+  // Build media array based on what this project actually has
+  const mediaItems = [];
 
-  const mediaItems = [
-    ...(project.video ? [{ type: "video", src: project.video }] : []),
-    ...project.images.map((img) => ({ type: "image", src: img })),
-  ];
+  // Add ShapeDiver model if it exists
+  if (project.shapediverConfig) {
+    mediaItems.push({ 
+      type: 'shapediver', 
+      component: (
+        <ShapeDiverViewer
+          modelUrl={project.shapediverConfig.modelUrl}
+          ticket={project.shapediverConfig.ticket}
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setIsLoading(false);
+            alert('Error loading 3D model');
+          }}
+        />
+      )
+    });
+  }
+  
+  // Add video if it exists
+  if (project.video) {
+    mediaItems.push({ type: 'video', src: project.video });
+  }
+  
+  // Add images if they exist
+  if (project.images && project.images.length > 0) {
+    project.images.forEach(src => {
+      mediaItems.push({ type: 'image', src });
+    });
+  }
 
-  const handleImageLoad = () => {
-    setIsLoading(false);
+  // If no media at all, show fallback
+  if (mediaItems.length === 0) {
+    return (
+      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <button onClick={onClose} className="absolute top-4 right-4 text-white text-3xl">&times;</button>
+        <div className="bg-white p-8 rounded-md shadow-lg">
+          <h2 className="text-2xl font-semibold mb-2">{project.title}</h2>
+          <p className="text-gray-500">No media available for this project.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const handleMediaClick = (e) => {
+    if (mediaItems.length <= 1) return;
+    
+    const mediaWidth = e.currentTarget.offsetWidth;
+    const clickX = e.nativeEvent.offsetX;
+    const zoneWidth = mediaWidth / 4;
+
+    if (clickX < zoneWidth) {
+      setCurrentIndex(currentIndex > 0 ? currentIndex - 1 : mediaItems.length - 1);
+      setIsLoading(true);
+    } else if (clickX > zoneWidth * 3) {
+      setCurrentIndex(currentIndex < mediaItems.length - 1 ? currentIndex + 1 : 0);
+      setIsLoading(true);
+    }
   };
 
-  const imageClick = (e) => {
-    const imageWidth = e.currentTarget.offsetWidth;
-    const clickX = e.nativeEvent.offsetX;
-    const zoneWidth = imageWidth / 4;
+  const goToNext = (e) => {
+    e.stopPropagation();
+    setCurrentIndex(currentIndex < mediaItems.length - 1 ? currentIndex + 1 : 0);
+    setIsLoading(true);
+  };
 
-    // Click on left of image
-    if (clickX < zoneWidth) {
-      setCurrentIndex(
-        currentIndex > 0 ? currentIndex - 1 : mediaItems.length - 1,
-      );
-      setIsLoading(true);
-    }
-    // Click on right of image
-    else if (clickX > zoneWidth * 3) {
-      setCurrentIndex(
-        currentIndex < mediaItems.length - 1 ? currentIndex + 1 : 0,
-      );
-      setIsLoading(true);
-    }
+  const goToPrev = (e) => {
+    e.stopPropagation();
+    setCurrentIndex(currentIndex > 0 ? currentIndex - 1 : mediaItems.length - 1);
+    setIsLoading(true);
+  };
+
+  // Get the label for current item
+  const getCurrentLabel = () => {
+    const item = mediaItems[currentIndex];
+    if (item.type === 'shapediver') return 'Interactive 3D Model';
+    if (item.type === 'video') return 'Video';
+    return 'Image';
   };
 
   return (
-    <div className="fixed top-0 left-0  w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-white hover:text-gray-600 text-3xl p-2 rounded-full transition"
+        className="absolute top-4 right-4 text-white hover:text-gray-600 text-3xl p-2 rounded-full transition z-50"
       >
-        &times; {/* Close button */}
+        &times;
       </button>
 
-      <div className="bg-white p-8 rounded-md shadow-lg w-[80vw] relative max-h-[90vh] border-t">
-        {/* showing pages length */}
-        {mediaItems.length > 1 && (
-          <div className="absolute top-9 right-16 text-black px-3 py-1  text-sm font-bold">
-            {currentIndex + 1} / {mediaItems.length}
-          </div>
-        )}
+      <div className="bg-white p-8 rounded-md shadow-lg w-[90vw] relative max-h-[90vh] overflow-hidden">
         <h2 className="text-2xl font-semibold mb-2">{project.title}</h2>
-        <h3 className="mb-2 opacity-60">
-          By {project.name}
-          <span className="mx-2">·</span>
-          {project.date}
+        <h3 className="mb-4 opacity-60">
+          By {project.name} · {project.date}
+          {mediaItems.length > 1 ? (
+            <span className="ml-4 px-3 py-1 bg-gray-200 rounded-full text-sm">
+              {getCurrentLabel()} · {currentIndex + 1}/{mediaItems.length}
+            </span>
+          ) : mediaItems[0]?.type === 'shapediver' ? (
+            <span className="ml-4 px-3 py-1 bg-gray-200 rounded-full text-sm">
+              Interactive 3D Model
+            </span>
+          ) : null}
         </h3>
-        <div className="mb-6 cursor-pointer relative" onClick={imageClick}>
-          {/* Right arrow */}
-          <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1/4 h-full flex items-center justify-end pr-4 pointer-events-none">
-            <div className="text-white text-4xl p-1 font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center pb-2">
-              &gt;
-            </div>
-          </div>
-
-          {/* left arrow */}
-          <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1/4 h-full flex items-center justify-start pl-4 pointer-events-none">
-            <div className="text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center pb-1">
-              &lt;
-            </div>
-          </div>
-
-          {/* Loading Spinner */}
+        
+        <div className="relative h-[calc(90vh-200px)] bg-gray-100 rounded-md overflow-hidden">
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-20">
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
               <div className="flex flex-col items-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
                 <p className="mt-2 text-sm text-gray-600">Loading...</p>
@@ -102,21 +139,91 @@ const ProjectShowcase = ({ project, onClose }) => {
             </div>
           )}
 
-          {/* video */}
-          {mediaItems.length > 0 &&
-          mediaItems[currentIndex].type === "video" ? (
-            <video controls className="w-full h-auto max-h-[calc(90vh-200px)] object-contain rounded-md">
-              <source src={mediaItems[currentIndex].src} type="video/mp4" />
-              Your broswer does not support the video tag.
-            </video>
-          ) : (
-            <img
-              src={mediaItems[currentIndex]?.src} onLoad={handleImageLoad}
-              alt={`${project.title} - Image ${currentIndex + 1}`}
-              className="w-full h-auto max-h-[calc(90vh-200px)] object-contain rounded-md"
-            />
+          {/* Navigation arrows - only show if more than one item */}
+          {mediaItems.length > 1 && (
+            <>
+              <div 
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center z-20 cursor-pointer"
+                style={{ right: '20px' }}
+                onClick={goToNext}
+              >
+                <div className="text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center pb-1 hover:bg-opacity-75 transition">
+                  &gt;
+                </div>
+              </div>
+              <div 
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center z-20 cursor-pointer"
+                style={{ left: '20px' }}
+                onClick={goToPrev}
+              >
+                <div className="text-white text-4xl font-bold bg-black bg-opacity-50 rounded-full w-12 h-12 flex items-center justify-center pb-1 hover:bg-opacity-75 transition">
+                  &lt;
+                </div>
+              </div>
+              <div className="absolute top-4 right-16 text-black px-3 py-1 bg-white bg-opacity-75 rounded-full text-sm font-bold z-10">
+                {currentIndex + 1} / {mediaItems.length}
+              </div>
+            </>
           )}
+
+          <div 
+            className="w-full h-full cursor-pointer"
+            onClick={handleMediaClick}
+          >
+            {mediaItems[currentIndex].type === 'shapediver' ? (
+              <div className="w-full h-full">
+                {mediaItems[currentIndex].component}
+              </div>
+            ) : mediaItems[currentIndex].type === 'video' ? (
+              <video 
+                controls 
+                className="w-full h-full object-contain"
+                onLoadedData={() => setIsLoading(false)}
+              >
+                <source src={mediaItems[currentIndex].src} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src={mediaItems[currentIndex].src}
+                onLoad={() => setIsLoading(false)}
+                alt={project.title}
+                className="w-full h-full object-contain"
+              />
+            )}
+          </div>
         </div>
+
+        {/* Parameters panel - only for ShapeDiver models */}
+        {mediaItems[currentIndex]?.type === 'shapediver' && (
+          <div className="mt-4 p-4 bg-gray-50 rounded-md">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-semibold mb-2">PARAMETERS</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Number Slider</span>
+                    <input type="range" className="w-32" />
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Number Slider</span>
+                    <input type="range" className="w-32" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">SCENE SETTINGS</h4>
+                <div className="space-y-1 text-sm">
+                  <p>General</p>
+                  <p>Scene Geometry</p>
+                  <p>Rendering</p>
+                  <p>Advanced Rendering</p>
+                  <p>Augmented Reality</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -142,42 +249,20 @@ const Home = () => {
       <div className="flex flex-col mb-20 gap-10 justify-center items-center">
         {projectsData.map((project) => (
           <div key={project.id} className="w-full max-w-[900px]">
-            {project.type === 'shapediver' ? (
-              <div>
-                <div className="h-[600px] w-full bg-gray-100 rounded-md overflow-hidden border-[2px] pb-20 p-6 border-gray-300 border-dashed">
-                  <h2 className="text-2xl font-semibold mb-2">{project.title}</h2>
-                <h3 className="mb-4 opacity-60">
-                  By {project.name} · {project.date}
-                  <span className="ml-4 px-3 py-1 bg-gray-200 rounded-full text-sm">
-                    Interactive 3D Model
-                  </span>
-                </h3>
-                  <ShapeDiverViewer
-                    modelUrl={project.shapediverConfig.modelUrl}
-                    ticket={project.shapediverConfig.ticket}
-                    onLoad={() => console.log('Model loaded')}
-                    onError={() => alert('Error loading 3D model')}
-                  />
-                </div>
-              </div>
-            ) : (
-              // Render thumbnail for regular projects
+              {/* Render thumbnail for regular projects */}
               <ProjectThumbnail
                 project={project}
                 onClick={handleThumbnailClick}
               />
-            )}
           </div>
         ))}
       </div>
 
       {selectedProject && (
-        selectedProject.type !== 'shapediver' && (
           <ProjectShowcase
           project={selectedProject}
           onClose={handleCloseShowcase}
           />
-        )
       )}
     </div>
   );

@@ -1,9 +1,28 @@
 const projectsData = [
     {
         id: 1,
+        title: 'MONG KOK PEDESTRIAN FOOTBRIDGE, HONG KONG',
+        name: "Weisheng He",
+        date: '2026',
+        mainImage: "/MONG KOK PEDESTRIAN/pj-06-1.jpg",
+        type: 'shapediver and images',
+        shapediverConfig: {
+            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260318-hk-bridge-shape-diver-2",
+            ticket: "bbd3497d8a993a7ba52b48a57085f3214a1ab397e335429ead3944dcbf8b4b0a3adeaaa86a45c7ead545e01e51747d4e82c4a5c611371b532d3730c541d216e327c3de7583a48c6c5b3dc62c48ebc921e3d201af090505a90eadce699fb8e16e982aebc73bd091-5d30c347bedade9910ed31d876aefb27",
+            modelName: "Mong Kok Bridge",
+            requiresAuth: true
+        },
+        video: "/MONG KOK PEDESTRIAN/pj-6-compressed.mp4",
+        images: Array.from({length: 12}, (_, i) => 
+            `/MONG KOK PEDESTRIAN/pj-06-${i + 1}.jpg`
+        )
+    },
+    {
+        id: 2,
         title: 'HEHE Custom Shelf',
         name: "Weisheng He",
         date: '2026',
+        mainImage: "/HEHE-Custom-Shelf.png",
         type: 'shapediver',
         shapediverConfig: {
             modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260411-custom-shelf-7",
@@ -11,18 +30,6 @@ const projectsData = [
             modelName: "260323 HEHE Custom Shelf",
             requiresAuth: true
         },
-    },
-    {
-        id: 2,
-            title: 'MONG KOK PEDESTRIAN FOOTBRIDGE, HONG KONG',
-            name: "Weisheng He",
-            date: '2026',
-            mainImage: "/MONG KOK PEDESTRIAN/pj-06-1.jpg",
-            video: "/MONG KOK PEDESTRIAN/pj-6-compressed.mp4",
-            images: Array.from({length: 12}, (_, i) => 
-                `/MONG KOK PEDESTRIAN/pj-06-${i + 1}.jpg`
-            )
-
     },
     {
         id: 3,
@@ -37,6 +44,20 @@ const projectsData = [
     },
     {
         id: 4,
+        title: 'Parametric Remodel of the Mediopadana Station by Santiago Calatrava',
+        name: "Weisheng He",
+        date: '2024',
+        mainImage: "/Mediopadana-Station.png",
+        type: 'shapediver',
+        shapediverConfig: {
+            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260326-trainstation-sd-7",
+            ticket: "8b9bf322ee447d6fda7d1133d29c1364cf2513f85bacc54d478f75609aa5fc8faf9b3de590cd0a22d5be04950b98e54e534e20a5f1b3ef569d54c5963633147b164e17cd0c59eb4ad0610c6ebde9a738e947e8b1d84f5e2c0b900d2b2bd880b58fc38fdd9739d4-ec4f471058e83ea06f1e53801771418a",
+            modelName: "241123 Parametric Remodel of the Mediopadana Station by Santiago Calatrava",
+            requiresAuth: true
+        },
+    },
+    {
+        id: 5,
             title: 'CUMBERLAND BASIN',
             name: "Weisheng He",
             date: '2022',
@@ -46,7 +67,7 @@ const projectsData = [
             )
     },
     {
-        id: 5,
+        id: 6,
             title: 'BRISTOL NURSERY',
             name: "Weisheng He",
             date: '2020',
@@ -57,7 +78,7 @@ const projectsData = [
 
     },
     {
-        id: 6,
+        id: 7,
             title: 'GOSPORT HERITAGE FLAT',
             name: "Weisheng He",
             date: '2022',
@@ -68,7 +89,7 @@ const projectsData = [
 
     },
     {
-        id: 7,
+        id: 8,
             title: 'WORKS AT 3BD ARCHITECTS',
             name: "Weisheng He",
             date: '2023',
