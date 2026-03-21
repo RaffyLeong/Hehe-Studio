@@ -50,8 +50,8 @@ const projectsData = [
         mainImage: "/Mediopadana-Station.png",
         type: 'shapediver',
         shapediverConfig: {
-            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260326-trainstation-sd-7",
-            ticket: "8b9bf322ee447d6fda7d1133d29c1364cf2513f85bacc54d478f75609aa5fc8faf9b3de590cd0a22d5be04950b98e54e534e20a5f1b3ef569d54c5963633147b164e17cd0c59eb4ad0610c6ebde9a738e947e8b1d84f5e2c0b900d2b2bd880b58fc38fdd9739d4-ec4f471058e83ea06f1e53801771418a",
+            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260326-trainstation-sd-8",
+            ticket: "6e0c0d39dee83a86fef194a72abde3fae633dc4968b481d8aca8536033128f885a1031d978d6af1e3523e89459227688abcf987fcb8272a051b186b17582af18ea1e2ad536d4fb2f6149ecc662135837ffc3784c840f42f4c7412ec3ad62d3e170aeecb3abcfd4-33a05ab0f78ef671af5589ecc0969242",
             modelName: "241123 Parametric Remodel of the Mediopadana Station by Santiago Calatrava",
             requiresAuth: true
         },
