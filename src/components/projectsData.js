@@ -6,7 +6,7 @@ const projectsData = [
         date: '2025',
         mainImage: "/Royal-Bournemouth-Hospital-Cost-Building.png",
         type: 'shapediver',
-        images: "Royal-Bournemouth-Hospital-Cost-Building.png",
+         images: ["/Royal-Bournemouth-Hospital-Cost-Building.png"],
     },
     {
         id: 2,
