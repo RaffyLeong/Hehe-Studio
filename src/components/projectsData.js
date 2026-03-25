@@ -6,12 +6,7 @@ const projectsData = [
         date: '2025',
         mainImage: "/Royal-Bournemouth-Hospital-Cost-Building.png",
         type: 'shapediver',
-        shapediverConfig: {
-            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260326-trainstation-sd-8",
-            ticket: "6e0c0d39dee83a86fef194a72abde3fae633dc4968b481d8aca8536033128f885a1031d978d6af1e3523e89459227688abcf987fcb8272a051b186b17582af18ea1e2ad536d4fb2f6149ecc662135837ffc3784c840f42f4c7412ec3ad62d3e170aeecb3abcfd4-33a05ab0f78ef671af5589ecc0969242",
-            modelName: "2503 Royal Bournemouth Hospital Cost Building Ward Extension",
-            requiresAuth: true
-        },
+        images: "Royal-Bournemouth-Hospital-Cost-Building.png",
     },
     {
         id: 2,
