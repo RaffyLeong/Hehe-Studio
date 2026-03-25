@@ -1,7 +1,7 @@
 const projectsData = [
     {
         id: 1,
-        title: 'Royal Bournemouth Hospital Cost Building Ward extension',
+        title: 'Royal Bournemouth Hospital Coast Building Ward Extension',
         name: "Weisheng He",
         date: '2025',
         mainImage: "/Royal-Bournemouth-Hospital-Cost-Building.png",
