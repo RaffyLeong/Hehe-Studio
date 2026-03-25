@@ -120,7 +120,7 @@ const ProjectShowcase = ({ project, onClose }) => {
           By {project.name} · {project.date}
           {mediaItems.length > 1 ? (
             <span className="ml-4 px-3 py-1 bg-gray-200 rounded-full text-sm">
-              {getCurrentLabel()} · {currentIndex + 1}/{mediaItems.length}
+              {getCurrentLabel()}
             </span>
           ) : mediaItems[0]?.type === 'shapediver' ? (
             <span className="ml-4 px-3 py-1 bg-gray-200 rounded-full text-sm">
@@ -193,37 +193,6 @@ const ProjectShowcase = ({ project, onClose }) => {
             )}
           </div>
         </div>
-
-        {/* Parameters panel - only for ShapeDiver models */}
-        {mediaItems[currentIndex]?.type === 'shapediver' && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-md">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h4 className="font-semibold mb-2">PARAMETERS</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Number Slider</span>
-                    <input type="range" className="w-32" />
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Number Slider</span>
-                    <input type="range" className="w-32" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">SCENE SETTINGS</h4>
-                <div className="space-y-1 text-sm">
-                  <p>General</p>
-                  <p>Scene Geometry</p>
-                  <p>Rendering</p>
-                  <p>Advanced Rendering</p>
-                  <p>Augmented Reality</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
