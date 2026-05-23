@@ -34,11 +34,11 @@ const ProjectShowcase = ({ project, onClose }) => {
         <ShapeDiverViewer
           modelUrl={project.shapediverConfig.modelUrl}
           ticket={project.shapediverConfig.ticket}
-          onLoad={() => setIsLoading(false)}
-          onError={() => {
-            setIsLoading(false);
-            alert('Error loading 3D model');
+          onLoad={() => {
+            console.log('✅ Model loaded successfully'); 
+            setIsLoading(false)
           }}
+          onSelect={(event) => console.log('User selected:', event)}
         />
       )
     });
