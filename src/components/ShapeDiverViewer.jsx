@@ -1,172 +1,174 @@
-import { useEffect, useRef } from 'react'
-import { createSession, createViewport } from '@shapediver/viewer' 
-import { InteractionEngine, SelectManager, InteractionData, HoverManager } from '@shapediver/viewer.features.interaction' 
-import { MaterialStandardData } from '@shapediver/viewer'
+import { createSession, createViewport, MaterialStandardData, VISIBILITY_MODE } from '@shapediver/viewer' 
+import { useEffect, useRef, useState} from 'react'
+import { InteractionData, InteractionEngine, SelectManager, HoverManager } from '@shapediver/viewer.features.interaction'
+import { addListener, removeListener, EVENTTYPE_INTERACTION } from '@shapediver/viewer'
 
-const ShapeDiverViewer = ({ modelUrl, ticket, onLoad, onError, onSelect }) => {
+const ShapeDiverViewer = ({My_Ticket, My_Model_View_URL, parameterName}) => {
+   
     const canvasRef = useRef(null)
-    const viewportRef = useRef(null)
-    const sessionRef = useRef(null)
-    const isMountedRef = useRef(true)
+    const initialized = useRef(false)
+    const refs = useRef({})
 
+    const [selected, setSelected] = useState(false)
+    const [heightValue, setHeightValue] = useState(0)
+    const [heightRange, setHeightRange] = useState({min:200, max: 2500, step:10})
+
+
+    const initViewer = async () => {
+        const viewport = await createViewport({
+        id: 'shapediver-viewport',
+        canvas: canvasRef.current,
+        visibility: VISIBILITY_MODE.SESSION,
+        branding: {
+            logo: "/logo2.png",
+            backgroundColor: "#efe5d3"
+        }
+        })
+
+    
+        const session = await createSession({
+        id: 'shapediver-session',
+        ticket: My_Ticket,
+        modelViewUrl: My_Model_View_URL
+        })
+
+        const interactionEngine = new InteractionEngine(viewport);
+
+        const selectManager = new SelectManager()
+        selectManager.effectMaterial = new MaterialStandardData({ color: "#976f00"})
+        interactionEngine.addInteractionManager(selectManager);
+
+        const hoverManager = new HoverManager()
+        hoverManager.effectMaterial = new MaterialStandardData({color: "#eeff00"})
+        interactionEngine.addInteractionManager(hoverManager)
+
+
+        const tagForInteraction = (node) => {
+            node.data.push(new InteractionData({ select: true, hover: true}))
+            node.updateVersion()
+        }
+
+        const applyInteractionFlags = () => {
+            for (let i = 0; i < session.node.children.length; i++){
+                tagForInteraction(session.node.children[i])
+            }
+        }
+        applyInteractionFlags()
+        
+    
+        
+
+        const heightParameter = session.getParameterByName("Total Height (tz)")[0]
+
+        if (!heightParameter) {
+            console.warn('Parameter "Total Height (tz)" not found on this model')
+        } else {
+
+            setHeightRange({
+                min: Number(heightParameter.min),
+                max: Number(heightParameter.max),
+                step: heightParameter.step || 10
+            })
+            setHeightValue(Number(heightParameter.value))
+        }
+
+        const output = Object.values(session.outputs)[0]
+        if (output){
+            output.updateCallback = () => applyInteractionFlags()
+        }
+
+
+        const selectOnToken = addListener(EVENTTYPE_INTERACTION.SELECT_ON, (e) => {
+            console.log("selected:", e.node?.name)
+            if (heightParameter) setHeightValue(Number(heightParameter.value))
+            setSelected(true)
+        })
+
+        const selectOffToken = addListener(EVENTTYPE_INTERACTION.SELECT_OFF, () => {
+            setSelected(false)
+        })
+
+        
+
+        refs.current = {
+            viewport,
+            session,
+            interactionEngine,
+            selectOnToken,
+            selectOffToken,
+            heightParameter,
+            debounceTimer: null
+        }
+    }
+
+    const onHeightChange = (e) => {
+        const value = Number(e.target.value)
+        setHeightValue(value)
+
+        const {session, heightParameter} = refs.current
+        if (!heightParameter) return
+
+        let next = value
+        if (heightParameter.decimalplaces === 0) next = Math.round(next)
+        heightParameter.value = next
+
+        clearTimeout(refs.current.debounceTimer)
+        refs.current.debounceTimer = setTimeout(()=> {
+            if (heightParameter.isValid(heightParameter.value)) session.customize()
+        }, 200)
+    }
+
+
+    
     useEffect(() => {
-        isMountedRef.current = true
+        if (initialized.current) return;
+        initialized.current = true;
+        initViewer();
 
-        const initViewer = async () => {
-            try {
-                if (!canvasRef.current || !isMountedRef.current) return
-
-                console.log('Initializing ShapeDiver viewer...')
-
-                // 1. Create viewport
-                const viewport = await createViewport({
-                    canvas: canvasRef.current,
-                    id: 'shapediver-viewport',
-                })
-                
-                if (!isMountedRef.current) {
-                    viewport.dispose()
-                    return
-                }
-                viewportRef.current = viewport
-                console.log('Viewport created')
-
-                // 2. Create session
-                const session = await createSession({
-                    ticket: ticket,
-                    modelViewUrl: 'https://sdr8euc1.eu-central-1.shapediver.com',
-                    id: 'shapediver-session',
-                })
-                
-                if (!isMountedRef.current) {
-                    session.close()
-                    viewport.dispose()
-                    return
-                }
-                sessionRef.current = session
-                console.log('Session created')
-
-                // 3. Setup interactions
-                const interactionEngine = new InteractionEngine(viewport)
-
-                const hoverManager = new HoverManager()
-                hoverManager.effectMaterial = new MaterialStandardData({ color: '#0066ff' })
-                interactionEngine.addInteractionManager(hoverManager)
-
-                const selectManager = new SelectManager()
-                selectManager.effectMaterial = new MaterialStandardData({ color: '#ffaa00' })
-                interactionEngine.addInteractionManager(selectManager)
-
-                // 4. Add interactions to nodes
-                const addInteractionToNodes = (node) => {
-                    if (node && node.data) {
-                        node.data.push(new InteractionData({ hover: true, select: true }))
-                        node.updateVersion()
-                    }
-                    if (node && node.children) {
-                        node.children.forEach(child => addInteractionToNodes(child))
-                    }
-                }
-
-                addInteractionToNodes(session.node)
-                console.log('Interactions added to nodes')
-
-                // 5. Event listeners
-                hoverManager.eventEmitter.on('hover', (event) => {
-                    console.log('Hovering over:', event?.node?.name)
-                    if (canvasRef.current && isMountedRef.current) {
-                        canvasRef.current.style.cursor = 'pointer'
-                    }
-                })
-
-                hoverManager.eventEmitter.on('unhover', () => {
-                    if (canvasRef.current && isMountedRef.current) {
-                        canvasRef.current.style.cursor = 'default'
-                    }
-                })
-
-                selectManager.eventEmitter.on('select', (event) => {
-                    console.log('Selected:', event?.node?.name)
-                    if (onSelect && isMountedRef.current) onSelect(event)
-                })
-
-                if (onLoad && isMountedRef.current) {
-                    onLoad()
-                }
-                console.log('ShapeDiver viewer fully initialized!')
-
-            } catch (err) {
-                console.error('ShapeDiver init error:', err)
-                if (onError && isMountedRef.current) onError(err)
-            }
-        }
-
-        initViewer()
-
-        // IMPORTANT: Cleanup function - properly destroy everything
         return () => {
-            console.log('Cleaning up ShapeDiver viewer...')
-            isMountedRef.current = false
+            const { 
+                interactionEngine, session, viewport, 
+                selectOnToken, selectOffToken, onPointerMove, 
+                debounceTimer
+            } = refs.current;
             
-            // Close session first
-            if (sessionRef.current) {
-                try {
-                    sessionRef.current.close()
-                } catch (err) {
-                    console.warn('Error closing session:', err)
-                }
-                sessionRef.current = null
-            }
-            
-            // Then dispose viewport (this should clean up WebGL)
-            if (viewportRef.current) {
-                try {
-                    // Force stop any ongoing rendering
-                    if (viewportRef.current.renderer) {
-                        viewportRef.current.renderer.stop()
-                    }
-                    viewportRef.current.dispose()
-                } catch (err) {
-                    console.warn('Error disposing viewport:', err)
-                }
-                viewportRef.current = null
-            }
-            
-            // Finally, clear the canvas context
-            if (canvasRef.current) {
-                const canvas = canvasRef.current
-                // Get WebGL context and lose it
-                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
-                if (gl) {
-                    const loseContext = gl.getExtension('WEBGL_lose_context')
-                    if (loseContext) {
-                        loseContext.loseContext()
-                    }
-                }
-                // Clear canvas
-                const ctx = canvas.getContext('2d')
-                if (ctx) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height)
-                }
-                // Remove canvas from DOM to be safe
-                canvas.removeAttribute('style')
-                canvas.width = 1
-                canvas.height = 1
-            }
-            
-            console.log('ShapeDiver viewer cleanup complete')
+            clearTimeout(debounceTimer)
+            if (onPointerMove) canvasRef.current?.removeEventListener('pointermove', onPointerMove)
+            if (selectOnToken) removeListener(selectOnToken)
+            if (selectOffToken) removeListener(selectOffToken)
+
+            interactionEngine?.close?.();
+            session?.close?.();
+            viewport?.close?.();
         }
-    }, [ticket, onLoad, onError, onSelect])
+    }, [])
 
     return (
-        <div className="w-full h-full min-h-[500px] rounded-md overflow-hidden">
+        <div className="relative w-full h-full min-h-[500px] rounded-md overflow-hidden">
             <canvas
                 ref={canvasRef}
                 className="w-full h-full border-0"
                 title="ShapeDiver Model"
             />
-        </div>
+
+            {selected && (
+                <div className='absolute top-4 right-4 bg-white/90 backdrop-blur p-4 rounded-md shadow-lg w-64'>
+                <label className="block text-sm font-medium mb-2">Total Height (tz)</label>
+                <input
+                    type="range"
+                    min={heightRange.min}
+                    max={heightRange.max}
+                    step={heightRange.step}
+                    value={heightValue}
+                    onChange={onHeightChange}
+                    className="w-full"
+                />
+             <div className="text-sm text-gray-600 mt-1">{heightValue}</div>
+         </div>
+        )}
+    </div>
     )
 }
+
 
 export default ShapeDiverViewer

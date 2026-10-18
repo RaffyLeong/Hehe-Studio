@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import projectsData from "./projectsData";
 import ShapeDiverViewer from "./ShapeDiverViewer";
+import ShapeDiverAppIframe from "./ShapeDiverAppIframe";
+import ShTestViewer from "./ShTestViewer";
 
 // project image on home page
 const ProjectThumbnail = ({ project, onClick }) => {
@@ -26,14 +28,14 @@ const ProjectShowcase = ({ project, onClose }) => {
   // Build media array based on what this project actually has
   const mediaItems = [];
 
-  // Add ShapeDiver model if it exists
+  // Add ShapeDiver Viewer model if it exists
   if (project.shapediverConfig) {
     mediaItems.push({ 
       type: 'shapediver', 
       component: (
         <ShapeDiverViewer
-          modelUrl={project.shapediverConfig.modelUrl}
-          ticket={project.shapediverConfig.ticket}
+          My_Model_View_URL={project.shapediverConfig.My_Model_View_URL}
+          My_Ticket={project.shapediverConfig.My_Ticket}
           onLoad={() => {
             console.log('✅ Model loaded successfully'); 
             setIsLoading(false)
@@ -43,7 +45,30 @@ const ProjectShowcase = ({ project, onClose }) => {
       )
     });
   }
+
+// Add ShapeDiver Viewer model TEST if it exists
+  if (project.shapediverConfigTest) {
+    mediaItems.push({ 
+      type: 'shapediver', 
+      component: (
+        <ShTestViewer
+          My_Model_View_URL={project.shapediverConfigTest.My_Model_View_URL}
+          My_Ticket={project.shapediverConfigTest.My_Ticket}
+          onLoad={() => {
+            console.log('✅ Model loaded successfully'); 
+            setIsLoading(false)
+          }}
+          onSelect={(event) => console.log('User selected:', event)}
+        />
+      )
+    });
+  }
+
   
+  if (project.firstImage) {
+    mediaItems.push({type: 'image', src: project.firstImage})
+  }
+
   // Add video if it exists
   if (project.video) {
     mediaItems.push({ type: 'video', src: project.video });
@@ -53,6 +78,18 @@ const ProjectShowcase = ({ project, onClose }) => {
   if (project.images && project.images.length > 0) {
     project.images.forEach(src => {
       mediaItems.push({ type: 'image', src });
+    });
+  }
+
+  if (project.shapediverApp) {
+    mediaItems.push({
+      type: 'shapediver',
+      component: (
+        <ShapeDiverAppIframe
+        src={project.shapediverApp.My_App_URL}
+        onLoad={() => setIsLoading(false)}
+        />
+      )
     });
   }
 

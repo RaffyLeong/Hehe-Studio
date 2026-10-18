@@ -15,15 +15,14 @@ const projectsData = [
         date: '2026',
         mainImage: "/MONG KOK PEDESTRIAN/pj-06-1.jpg",
         type: 'shapediver and images',
-        shapediverConfig: {
-            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260318-hk-bridge-shape-diver-2",
-            ticket: "bbd3497d8a993a7ba52b48a57085f3214a1ab397e335429ead3944dcbf8b4b0a3adeaaa86a45c7ead545e01e51747d4e82c4a5c611371b532d3730c541d216e327c3de7583a48c6c5b3dc62c48ebc921e3d201af090505a90eadce699fb8e16e982aebc73bd091-5d30c347bedade9910ed31d876aefb27",
+        firstImage: "/MONG KOK PEDESTRIAN/pj-06-1.jpg",
+        shapediverApp: {
+            My_App_URL: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260318-hk-bridge-shape-diver-3",
             modelName: "Mong Kok Bridge",
-            requiresAuth: true
         },
         video: "/MONG KOK PEDESTRIAN/pj-6-compressed.mp4",
-        images: Array.from({length: 12}, (_, i) => 
-            `/MONG KOK PEDESTRIAN/pj-06-${i + 1}.jpg`
+        images: Array.from({length: 11}, (_, i) => 
+            `/MONG KOK PEDESTRIAN/pj-06-${i + 2}.jpg`
         )
     },
     {
@@ -34,8 +33,9 @@ const projectsData = [
         mainImage: "/HEHE-Custom-Shelf.png",
         type: 'shapediver',
         shapediverConfig: {
-            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260411-custom-shelf-7",
-            ticket: "55e6e7a4aec6c783e238f5d4b4a55ad9bf567528114b56b3c22685509401c0e391c64317beb6238e1f9ef7f6edbdcb26bf0ebdfda2415e89c8fe27ccdc8887a6858c7827e97abad7731e890e4abff0fb08b0458e50498a46b96e23adc8dfc961f75803e97dbc54-5f98e31c1cad5418db7cc0c56acf4286",
+            My_Model_View_URL: "https://sdr8euc1.eu-central-1.shapediver.com",
+            My_Ticket: "2ef243edd8e2b2e116e5566759a65fb1b41173099b3b8076e20cd506019f79609c795e82710dda10f30a34db36ed4dfde417cac91e12096cf7f9cd265372d0f1d48bc84300ac5315308be7171e0bd2a9db10e1658b355c3690c7d8b22350a4ad14879e228483a4-53f3e9cf75469a1b7677109b93fc0ad7",
+            //ticket2: e7c30419aabfc4cc59a4578d57ee2539a03624fe0d436f84b6580c8e42a95759d491a388d914d5e70d278cafc81afb2ac0071a39d52814d90f0042371e59527760a7a51f90d15b282082567536edbf37d64ea39df78bbc123829d1ec684974e45314cf0f350204-a0820f04acb66770eb7273f51b2cf134
             modelName: "260323 HEHE Custom Shelf",
             requiresAuth: true
         },
@@ -58,11 +58,9 @@ const projectsData = [
         date: '2024',
         mainImage: "/Mediopadana-Station.png",
         type: 'shapediver',
-        shapediverConfig: {
-            modelUrl: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260326-trainstation-sd-8",
-            ticket: "6e0c0d39dee83a86fef194a72abde3fae633dc4968b481d8aca8536033128f885a1031d978d6af1e3523e89459227688abcf987fcb8272a051b186b17582af18ea1e2ad536d4fb2f6149ecc662135837ffc3784c840f42f4c7412ec3ad62d3e170aeecb3abcfd4-33a05ab0f78ef671af5589ecc0969242",
+        shapediverApp: {
+            My_App_URL: "https://appbuilder.shapediver.com/v1/main/latest/?slug=260326-trainstation-sd-7",
             modelName: "241123 Parametric Remodel of the Mediopadana Station by Santiago Calatrava",
-            requiresAuth: true
         },
     },
     {
@@ -106,6 +104,20 @@ const projectsData = [
             images: Array.from({length: 7}, (_, i) =>
                 `/WORKS AT 3BD ARCHITECTS/pj-04-${i + 1}.jpg`
             )
+    },
+    {
+        id: 10,
+            title: "TESTING VIEWER",
+            name: "ShapeDiver",
+            date: "2026",
+            mainImage: "/HEHE-Custom-Shelf.png",
+            type: 'shapediver',
+            shapediverConfigTest: {
+                My_Model_View_URL: "https://sdr8euc1.eu-central-1.shapediver.com",
+                My_Ticket: "2ef243edd8e2b2e116e5566759a65fb1b41173099b3b8076e20cd506019f79609c795e82710dda10f30a34db36ed4dfde417cac91e12096cf7f9cd265372d0f1d48bc84300ac5315308be7171e0bd2a9db10e1658b355c3690c7d8b22350a4ad14879e228483a4-53f3e9cf75469a1b7677109b93fc0ad7",
+                modelName: "260323 HEHE Custom Shelf",
+                requiresAuth: true
+            }
     },
 
 ]
